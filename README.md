@@ -1,8 +1,12 @@
 # 井字遊戲
 
-本專案是跟著 [React 官方文件的教學](https://beta.reactjs.org/learn/tutorial-tic-tac-toe)實作後，再加入一些額外功能。詳細描述如下：
+## 成品
 
-## 功能
+[Tic-Tac-Toe](https://tzuhanchen.github.io/tic-tac-toe/)
+
+## 說明
+
+本專案是跟著 [React 官方文件的教學](https://beta.reactjs.org/learn/tutorial-tic-tac-toe)實作後，再加入一些額外功能。詳細描述如下：
 
 ### 官方文件有寫出功能描述，並提供程式碼
 
@@ -22,7 +26,6 @@
 * `Array.map(() => { });` 的大括號裡面可以有 `return();`
 * `for(){ }` 的大括號裡面的 `return();` 只會執行一次
 * `return();` 裡面不能有迴圈
-
 * `npm start`：編譯＋啟動開發用伺服器＋執行
 * `npm run deploy`：產出正式程式檔案＋部署
 
@@ -30,4 +33,4 @@
 
 [[筆記][React]用 for 迴圈處理Component](https://ithelp.ithome.com.tw/articles/10201227)
 
-[Deployment | Create React App](https://create-react-app.dev/docs/deployment/)
+[Deployment | Create React App](https://create-react-app.dev/docs/deployment/#github-pages)
