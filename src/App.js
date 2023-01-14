@@ -4,9 +4,9 @@ function Status({ xIsNext, squares }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = 'Winner: ' + winner;
+    status = '獲勝者: ' + winner;
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    status = '下一位: ' + (xIsNext ? 'X' : 'O');
   }
 
   return(<h2 className="status">{status}</h2>);
@@ -86,29 +86,29 @@ export default function Game() {
     let description;
     if (move === currentMove) {
       description = <li key={move} className="current">
-        You are at move #{move}</li>;
+        你在第 {move} 回合</li>;
     } else if (move === 0) {
       description = <li key={move}>
         <button className="move" onClick={() => jumpTo(move)}>
-          Go to game start</button></li>;
+          前往遊戲的起點</button></li>;
     } else {
       description = <li key={move}>
         <button className="move" onClick={() => jumpTo(move)}>
-          Go to move #{move}</button></li>;
+          前往第 {move} 回合</button></li>;
     }
     return (description);
   });
 
   return (
     <div className="app">
-      <h1>Tic Tac Toe</h1>
+      <h1>井字遊戲</h1>
       <div className="game">
         <div className="game-board">
           <Status xIsNext={xIsNext} squares={currentSquares} />
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
         </div>
         <div className="game-info">
-          <h2>History</h2>
+          <h2>歷史</h2>
           <ol>{moves}</ol>
         </div>
       </div>
