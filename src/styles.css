@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   height: 100vh;
   background-color: #eee;
@@ -11,23 +10,6 @@ body {
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
-}
-
-h1 {
-  margin-bottom: 12px;
-  font-size: 36px;
-  font-weight: 700;
-  text-align: center;
-}
-h2 {
-  margin-bottom: 6px;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
-}
-li {
-  list-style-type: none;
-  text-align: center;
 }
 
 .app {
@@ -43,10 +25,26 @@ li {
   display: flex;
   justify-content: space-between;
 }
-.game-board {
-  width: 180px;
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+.subtitle {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+.mb6 {
+  margin-bottom: 6px;
+}
+.mt6 {
+  margin-top: 6px;
 }
 
+.game-board {
+  width: 50%;
+}
 .board {
   width: 105px;
   margin: 0 auto;
@@ -71,12 +69,20 @@ li {
   line-height: 36px;
   text-align: center;
 }
+.square:hover, .square:active {
+  cursor: pointer;
+}
 
 .game-info {
-  width: 150px;
+  width: 50%;
+}
+li {
+  height: 36px;
+  list-style-type: none;
+  text-align: center;
 }
 .move {
-  margin-bottom: 3px;
+  height: 30px;
   padding: 6px 12px;
   border-radius: 18px;
   border: none;
@@ -86,11 +92,23 @@ li {
 }
 .move:hover, .move:active {
   cursor: pointer;
-  background-color: darkred;
-  color: #fff;
+  animation-name: swapColor;
+	animation-duration: 0.6s;
+	animation-fill-mode: forwards;
+}
+@keyframes swapColor {
+  from {
+    background-color: #eee;
+    color: #333;
+  }
+  to {
+    background-color: darkred;
+    color: #fff;
+  }
 }
 .current {
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 35px;
+  color: darkred;
 }

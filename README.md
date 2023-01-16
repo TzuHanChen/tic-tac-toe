@@ -1,8 +1,8 @@
 # 井字遊戲
 
-## 成品
+## 成果展示
 
-[Tic-Tac-Toe](https://tzuhanchen.github.io/tic-tac-toe/)
+[井字遊戲](https://tzuhanchen.github.io/tic-tac-toe/)
 
 ## 說明
 
@@ -20,6 +20,7 @@
 
 * 在當前步驟顯示你在第幾步的文字敘述，而非按鈕
 * 用兩層迴圈產生九宮格，而非寫死
+* 無人獲勝時，顯示平手
 
 ## 筆記
 

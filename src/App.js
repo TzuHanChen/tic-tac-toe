@@ -1,15 +1,44 @@
 import React, { useState } from 'react';
 
-function Status({ xIsNext, squares }) {
+function Status({ xIsNext, squares, currentMove }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
     status = '獲勝者: ' + winner;
+  } else if (calculateDraw(currentMove)) {
+    status = '平手';
   } else {
     status = '下一位: ' + (xIsNext ? 'X' : 'O');
   }
 
-  return(<h2 className="status">{status}</h2>);
+  return(<h2 className="subtitle mt6">{status}</h2>);
+}
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+
+function calculateDraw(currentMove) {
+  if (currentMove === 9) {
+    return true;
+  }
+  return false;
 }
 
 function Square({ value, onSquareClick }) {
@@ -39,31 +68,11 @@ function Board({ xIsNext, squares, onPlay }) {
     threeSquare = [];
     for (let j = 0; j < 3; j++) {
       threeSquare.push(<Square value={squares[i*3+j]} 
-        onSquareClick={() => handleClick(i*3+j)} />);
+        onSquareClick={() => handleClick(i*3+j)} key={j} />);
     }
-    threeRow.push(<div className="board-row">{threeSquare}</div>);
+    threeRow.push(<div className="board-row" key={i}>{threeSquare}</div>);
   }
   return (<div className="board">{threeRow}</div>);
-}
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }
 
 export default function Game() {
@@ -101,14 +110,15 @@ export default function Game() {
 
   return (
     <div className="app">
-      <h1>井字遊戲</h1>
+      <h1 className="title">井字遊戲</h1>
       <div className="game">
         <div className="game-board">
-          <Status xIsNext={xIsNext} squares={currentSquares} />
+          <h2 className="subtitle mb6">九宮格</h2>
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+          <Status xIsNext={xIsNext} squares={currentSquares} currentMove={currentMove} />
         </div>
         <div className="game-info">
-          <h2>歷史</h2>
+          <h2 className="subtitle mb6">歷史</h2>
           <ol>{moves}</ol>
         </div>
       </div>
