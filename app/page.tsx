@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-function calculateWinner(squares: any) {
+type Square = 'O' | 'X' | null;
+type Board = Array<Square>;
+type History = Array<Board>;
+
+function calculateWinner(squares: Board) {
   const lines = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -18,23 +22,26 @@ function calculateWinner(squares: any) {
 }
 
 function calculateDraw(currentMove: number) {
-  if (currentMove === 9) {
-    return true;
-  }
-  return false;
+  return currentMove === 9
 }
 
-function Square({ value, onSquareClick }:
-  { value: any, onSquareClick: any }) {
+function Square({ value, onSquareClick }: {
+  value: Square,
+  onSquareClick: () => void,
+}) {
   return (
-    <button className="-mr-1 -mt-1 size-9 p-0 border border-gray-200 bg-white text-teal-700 text-2xl font-bold leading-9 text-center hover:cursor-pointer active:cursor-pointer" onClick={onSquareClick}>
+    <button onClick={onSquareClick}
+      className="size-9 border border-gray-200 bg-white text-teal-700 text-2xl font-bold text-center hover:cursor-pointer active:cursor-pointer">
       {value}
     </button>
   );
 }
 
-function Board({ xIsNext, squares, onPlay }:
-  { xIsNext: any, squares: any, onPlay: any }) {
+function Board({ xIsNext, squares, onPlay }: {
+  xIsNext: boolean,
+  squares: Board,
+  onPlay: (nextSquares: Board) => void,
+}) {
   function handleClick(i: number) {
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -48,14 +55,14 @@ function Board({ xIsNext, squares, onPlay }:
     onPlay(nextSquares);
   }
 
-  let threeSquare = [], threeRow = [];
+  let threeSquare = [];
+  const threeRow = [];
   for (let i = 0; i < 3; i++) {
     threeSquare = [];
     for (let j = 0; j < 3; j++) {
       threeSquare.push(
-        <Square value={squares[i * 3 + j]}
-          onSquareClick={() => handleClick(i * 3 + j)}
-          key={j} />
+        <Square key={j} value={squares[i * 3 + j]}
+          onSquareClick={() => handleClick(i * 3 + j)} />
       );
     }
     threeRow.push(
@@ -67,8 +74,11 @@ function Board({ xIsNext, squares, onPlay }:
   return <div className="w-27 mx-auto">{threeRow}</div>;
 }
 
-function Status({ xIsNext, squares, currentMove }:
-  { xIsNext: boolean, squares: any, currentMove: number }) {
+function Status({ xIsNext, squares, currentMove }: {
+  xIsNext: boolean,
+  squares: Board,
+  currentMove: number,
+}) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
@@ -79,11 +89,14 @@ function Status({ xIsNext, squares, currentMove }:
     status = '下一位: ' + (xIsNext ? 'X' : 'O');
   }
 
-  return <h2 className="mt-1.5 text-2xl font-bold text-center">{status}</h2>;
+  return <h2 className="mt-3 text-2xl font-bold text-center">{status}</h2>;
 }
 
-function History({ history, currentMove, setCurrentMove }:
-  { history: any[][], currentMove: number, setCurrentMove: any }) {
+function History({ history, currentMove, setCurrentMove }: {
+  history: History,
+  currentMove: number,
+  setCurrentMove: React.Dispatch<React.SetStateAction<number>>,
+}) {
   function jumpTo(nextMove: number) {
     setCurrentMove(nextMove);
   }
@@ -97,17 +110,19 @@ function History({ history, currentMove, setCurrentMove }:
         </span>;
     } else if (move === 0) {
       description =
-        <button className="" onClick={() => jumpTo(move)}>
+        <button onClick={() => jumpTo(move)}
+          className="rounded-2xl border-none py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-teal-700 hover:text-white active:cursor-pointer active:bg-teal-700 active:text-white transition-colors duration-300">
           前往遊戲的起點
         </button>;
     } else {
       description =
-        <button className="rounded-2xl border-none h-7.5 py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-teal-700 hover:text-white active:cursor-pointer active:bg-teal-700 active:text-white transition-colors duration-300" onClick={() => jumpTo(move)}>
+        <button onClick={() => jumpTo(move)}
+          className="rounded-2xl border-none py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-teal-700 hover:text-white active:cursor-pointer active:bg-teal-700 active:text-white transition-colors duration-300">
           前往第 {move} 回合
         </button>;
     }
     return (
-      <li className="h-9 list-none text-center" key={move}>{description}</li>
+      <li className="h-10 list-none text-center" key={move}>{description}</li>
     );
   });
 
@@ -115,20 +130,20 @@ function History({ history, currentMove, setCurrentMove }:
 }
 
 export default function Home() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-	const [currentMove, setCurrentMove] = useState(0);
-	const xIsNext = currentMove % 2 === 0;
-	const currentSquares = history[currentMove];
+  const [history, setHistory] = useState<History>([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
 
-	function handlePlay(nextSquares: any) {
-		const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-		setHistory(nextHistory);
-		setCurrentMove(nextHistory.length - 1);
-	}
+  function handlePlay(nextSquares: Board) {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  }
 
   return (
-    <div className="shadow-md rounded-2xl w-75 min-h-108 bg-gray-100 px-3 text-gray-800">
-      <h1 className="my-1.5 text-4xl font-bold text-center">井字遊戲</h1>
+    <div className="shadow-md rounded-2xl min-w-80 min-h-128 bg-gray-100 py-6 px-3 text-gray-800">
+      <h1 className="mb-6 text-4xl font-bold text-center">井字遊戲</h1>
       <div className="flex justify-between">
         <div className="w-1/2">
           <Board xIsNext={xIsNext}
