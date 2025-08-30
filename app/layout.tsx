@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_TC } from 'next/font/google';
 import "./globals.css";
 
-export const notoSansTC = Noto_Sans_TC({
+const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
   weight: ['400', '700'],
   fallback: ["sans-serif"],
