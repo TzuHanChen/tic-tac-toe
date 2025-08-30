@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CircleSmall, X } from "./icons";
 
 type Square = 'O' | 'X' | null;
 type Board = Array<Square>;
@@ -30,9 +31,10 @@ function Square({ value, onSquareClick }: {
   onSquareClick: () => void,
 }) {
   return (
-    <button onClick={onSquareClick}
-      className="size-9 border border-gray-200 bg-white text-teal-700 text-2xl font-bold text-center hover:cursor-pointer active:cursor-pointer">
-      {value}
+    <button data-value={value} onClick={onSquareClick}
+      className="size-12 border border-gray-200 bg-white flex justify-center items-center data-[value=O]:text-teal-700 data-[value=X]:text-rose-800 hover:cursor-pointer active:cursor-pointer">
+      {value === 'X' && <X />}
+      {value === 'O' && <CircleSmall />}
     </button>
   );
 }
@@ -66,12 +68,10 @@ function Board({ xIsNext, squares, onPlay }: {
       );
     }
     threeRow.push(
-      <div className="-mb-1 h-9 flex items-start" key={i}>
-        {threeSquare}
-      </div>
+      <div className="flex" key={i}>{threeSquare}</div>
     );
   }
-  return <div className="w-27 mx-auto">{threeRow}</div>;
+  return <div className="size-min mx-auto">{threeRow}</div>;
 }
 
 function Status({ xIsNext, squares, currentMove }: {
@@ -82,11 +82,13 @@ function Status({ xIsNext, squares, currentMove }: {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = '獲勝者: ' + winner;
+    status = <span className="flex justify-center items-center">
+      獲勝者　{winner === 'X' ? <X /> : <CircleSmall />}</span>;
   } else if (calculateDraw(currentMove)) {
     status = '平手';
   } else {
-    status = '下一位: ' + (xIsNext ? 'X' : 'O');
+    status = <span className="flex justify-center items-center">
+      下一位　{xIsNext ? <X /> : <CircleSmall />}</span>;
   }
 
   return <h2 className="mt-3 text-2xl font-bold text-center">{status}</h2>;
@@ -102,31 +104,23 @@ function History({ history, currentMove, setCurrentMove }: {
   }
 
   const moves = history.map((squares, move) => {
-    let description;
     if (move === currentMove) {
-      description =
-        <span className="leading-9 font-bold text-teal-700">
-          你在第 {move} 回合
-        </span>;
-    } else if (move === 0) {
-      description =
-        <button onClick={() => jumpTo(move)}
-          className="rounded-2xl border-none py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-teal-700 hover:text-white active:cursor-pointer active:bg-teal-700 active:text-white transition-colors duration-300">
-          前往遊戲的起點
-        </button>;
+      return (
+        <p key={move} className="leading-9 font-bold text-center">
+          {(move === 0) ? '遊戲的起點' : `第 ${move} 回合`}
+        </p>
+      )
     } else {
-      description =
-        <button onClick={() => jumpTo(move)}
-          className="rounded-2xl border-none py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-teal-700 hover:text-white active:cursor-pointer active:bg-teal-700 active:text-white transition-colors duration-300">
-          前往第 {move} 回合
-        </button>;
+      return (
+        <button key={move} onClick={() => jumpTo(move)}
+          className="rounded-2xl border-none py-1.5 px-3 bg-gray-200 hover:cursor-pointer hover:bg-gray-600 hover:text-white active:cursor-pointer active:bg-gray-600 active:text-white transition-colors duration-300">
+          {(move === 0) ? '遊戲的起點' : `第 ${move} 回合`}
+        </button>
+      )
     }
-    return (
-      <li className="h-10 list-none text-center" key={move}>{description}</li>
-    );
   });
 
-  return <ol>{moves}</ol>;
+  return <div className="mt-6 w-full grid grid-flow-col grid-cols-2 grid-rows-5 gap-2">{moves}</div>
 }
 
 export default function Home() {
@@ -142,21 +136,15 @@ export default function Home() {
   }
 
   return (
-    <div className="shadow-md rounded-2xl min-w-80 min-h-128 bg-gray-100 py-6 px-3 text-gray-800">
+    <div className="shadow-md rounded-2xl min-w-80 bg-gray-100 p-6 text-gray-800">
       <h1 className="mb-6 text-4xl font-bold text-center">井字遊戲</h1>
-      <div className="flex justify-between">
-        <div className="w-1/2">
-          <Board xIsNext={xIsNext}
-            squares={currentSquares}
-            onPlay={handlePlay} />
-          <Status xIsNext={xIsNext}
-            squares={currentSquares}
-            currentMove={currentMove} />
-        </div>
-        <div className="w-1/2">
-          <History history={history} currentMove={currentMove} setCurrentMove={setCurrentMove} />
-        </div>
-      </div>
+      <Board xIsNext={xIsNext}
+        squares={currentSquares}
+        onPlay={handlePlay} />
+      <Status xIsNext={xIsNext}
+        squares={currentSquares}
+        currentMove={currentMove} />
+      <History history={history} currentMove={currentMove} setCurrentMove={setCurrentMove} />
     </div>
   );
 }

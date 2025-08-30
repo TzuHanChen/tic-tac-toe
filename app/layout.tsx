@@ -13,6 +13,14 @@ export const notoSansTC = Noto_Sans_TC({
 export const metadata: Metadata = {
   title: "井字遊戲",
   description: "可以穿梭時空的井字遊戲",
+  icons: 'https://tic-tac-toe-tzuhanchen.vercel.app/icon.svg',
+  openGraph: {
+    title: '井字遊戲',
+    description: '可以穿梭時空的井字遊戲',
+    url: 'https://tic-tac-toe-tzuhanchen.vercel.app',
+    siteName: 'My Site',
+    images: [{ url: 'https://tic-tac-toe-tzuhanchen.vercel.app/open-graph.png' }]
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
