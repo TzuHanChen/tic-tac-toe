@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src="https://raw.githubusercontent.com/TzuHanChen/tic-tac-toe/a059e84ba77585c9f1b9f335ec8a0f935441a36b/public/icon.svg" alt="井字遊戲的圖示" title="井字遊戲的圖示" style="border-radius: 48px; width: 96px" />
+</p>
 
-## Getting Started
+<h1 align="center">井字遊戲</h1>
 
-First, run the development server:
+<p align="center">可以穿梭時空的井字遊戲</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![截圖](/public/open-graph.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 開發工具
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+使用 Next.js + TypeScript + Tailwind CSS + Lucide icons 製作網頁畫面
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+使用 Vercel 取得 GitHub 的提交紀錄、自動部署
 
-## Learn More
+## 相關連結
 
-To learn more about Next.js, take a look at the following resources:
+[上線網站 DEMO](https://tic-tac-toe-tzuhanchen.vercel.app)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Meta Tags](https://metatags.io/?url=https%3A%2F%2Ftic-tac-toe-tzuhanchen.vercel.app)：可測試各項 SEO 資訊
