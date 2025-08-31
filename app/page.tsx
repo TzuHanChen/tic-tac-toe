@@ -80,18 +80,22 @@ function Status({ xIsNext, squares, currentMove }: {
   currentMove: number,
 }) {
   const winner = calculateWinner(squares);
-  let status;
+  let status = <></>;
   if (winner) {
-    status = <span className="flex justify-center items-center">
-      獲勝者　{winner === 'X' ? <X /> : <CircleSmall />}</span>;
+    status = <>
+      <span>獲勝者</span>
+      {winner === 'X' ? <X /> : <CircleSmall />}
+    </>;
   } else if (calculateDraw(currentMove)) {
-    status = '平手';
+    status = <span>平手</span>;
   } else {
-    status = <span className="flex justify-center items-center">
-      下一位　{xIsNext ? <X /> : <CircleSmall />}</span>;
+    status = <>
+      <span>下一位</span>
+      {xIsNext ? <X /> : <CircleSmall />}
+    </>;
   }
 
-  return <h2 className="mt-3 text-2xl font-bold text-center">{status}</h2>;
+  return <h2 className="mt-3 flex justify-center items-center gap-3 text-2xl leading-none font-bold">{status}</h2>;
 }
 
 function History({ history, currentMove, setCurrentMove }: {
@@ -136,7 +140,7 @@ export default function Home() {
   }
 
   return (
-    <div className="shadow-md rounded-2xl min-w-80 bg-gray-100 p-6 text-gray-800">
+    <div className="shadow-md rounded-2xl min-w-80 bg-gray-100 p-6">
       <h1 className="mb-6 text-4xl font-bold text-center">井字遊戲</h1>
       <Board xIsNext={xIsNext}
         squares={currentSquares}
